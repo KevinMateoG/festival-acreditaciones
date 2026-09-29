@@ -1,4 +1,4 @@
-export default interface Acreditacion{
+export default interface Acreditacion {
     id: number;
     nombre: string;
     medio: string;

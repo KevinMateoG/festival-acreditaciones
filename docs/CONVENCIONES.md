@@ -11,7 +11,7 @@ Las pruebas oficiales verifican exactamente lo que dice este documento. Si tu AP
 ## 2. Forma de las respuestas
 
 | Caso | Código | Cuerpo |
-|---|---|---|
+| --- | --- | --- |
 | Listado | `200` | `{ "pagination": { "total", "currentPage", "limit", "totalPages" }, "data": [ ... ] }` |
 | Un registro (GET por id, PATCH) | `200` | `{ "data": { ... } }` |
 | Creación | `201` | `{ "data": { ... } }` con el registro creado, **incluido su `id`** |
@@ -48,7 +48,7 @@ Cuando una petición tiene varios problemas, se responde el **primero** de esta 
 ## 6. Formatos
 
 | Dato | Formato | Ejemplo |
-|---|---|---|
+| --- | --- | --- |
 | Hora | `HH:MM`, 24 horas, con cero inicial | `09:00`, `21:30` |
 | Fecha | `YYYY-MM-DD` | `2026-11-20` |
 | Dinero | entero en pesos, sin decimales | `250000` |
@@ -72,7 +72,7 @@ Cuando una petición tiene varios problemas, se responde el **primero** de esta 
 **Días** — `dias`
 
 | id | nombre | fecha | aforo |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | 1 | Viernes | 2026-11-20 | 30000 |
 | 2 | Sábado | 2026-11-21 | 30000 |
 | 3 | Domingo | 2026-11-22 | 30000 |
