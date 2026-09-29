@@ -13,6 +13,6 @@ export class AcreditacionByIdUseCase{
             throw new Error('bad_request_id,El id de la acreditación es inválido');
         }
         const acreditacion = await this.acreditacionRepository.findAcreditacionById(id);
-        return { acreditacion };
+        return { data: acreditacion };
     }
 }
