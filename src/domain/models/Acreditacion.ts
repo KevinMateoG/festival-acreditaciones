@@ -10,3 +10,12 @@ export default interface Acreditacion{
     motivo_rechazo?: string;
     state: string;
 }
+
+export interface AcreditacionFilterOptions {
+  tipo?: string;
+  estado?: string;
+  dia_id?: number;
+  limit?: number;
+  offset?: number;
+  page?: number;
+}
