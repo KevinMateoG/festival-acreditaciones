@@ -10,3 +10,8 @@ export default interface Acreditacion {
     motivo_rechazo?: string;
     state: string;
 }
+
+export interface UpdateAcreditacionStatusRequest {
+    estado: string;
+    motivo?: string;
+}

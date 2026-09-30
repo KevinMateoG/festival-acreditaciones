@@ -12,5 +12,6 @@ export default interface IAcreditacionRepository {
     updateAcreditacionStatus(
         id: number,
         status: string,
+        motivo?: string,
     ): Promise<Acreditacion | null>;
 }
