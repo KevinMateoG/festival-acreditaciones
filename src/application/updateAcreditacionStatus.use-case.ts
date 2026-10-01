@@ -20,30 +20,22 @@ export default class UpdateAcreditacionStatusUseCase {
     body: UpdateAcreditacionStatusRequest,
   ): Promise<Acreditacion> {
     if (!isValidId(id) || isAcreditacionStatusRequestInvalid(body)) {
-      throw Object.assign(new Error("bad_request, Parámetros inválidos"), {
-        status: 400,
-      });
+      throw new Error("bad_request, Parámetros inválidos");
     }
 
     const acreditacion =
       await this.acreditacionRepository.findAcreditacionById(id);
 
     if (!acreditacion || acreditacion.state === "REMOVED") {
-      throw Object.assign(
-        new Error(`not_found, Acreditación ${id} no encontrada`),
-        { status: 404 },
-      );
+      throw new Error(`not_found, Acreditación ${id} no encontrada`);
     }
 
     if (acreditacion.estado !== "PENDIENTE") {
-      throw Object.assign(
-        new Error("Solo se puede decidir una acreditación PENDIENTE"),
-        {
-          status: 409,
-        },
+      throw new Error(
+        "request_not_pending, Solo se puede decidir una acreditación PENDIENTE",
       );
     }
-    
+
     const acreditacionActualizada =
       await this.acreditacionRepository.updateAcreditacionStatus(
         id,
@@ -52,12 +44,7 @@ export default class UpdateAcreditacionStatusUseCase {
       );
 
     if (!acreditacionActualizada) {
-      throw Object.assign(
-        new Error(`No se pudo actualizar el estado de la acreditación ${id}`),
-        {
-          status: 404,
-        },
-      );
+      throw new Error(`not_found, Acreditación ${id} no encontrada`);
     }
     return acreditacionActualizada;
   }

@@ -3,6 +3,7 @@ import UpdateAcreditacionStatusUseCase from "../../application/updateAcreditacio
 import type IAcreditacionRepository from "../../domain/repository/IAcreditacion.repository";
 import AcreditacionUpdateStatusPgRepository from "../../infrastructure/repository/acreditacion-update-status.pg.repository";
 import AcreditacionPgRepository from "../../infrastructure/repository/acreditacion.pg";
+import handleError from "../../utils/handleError";
 
 const findRepo = new AcreditacionPgRepository();
 const updateStatusRepo = new AcreditacionUpdateStatusPgRepository();
@@ -25,8 +26,7 @@ export const updateAcreditacionStatus = async (
     );
 
     res.status(200).json({ data: result });
-  } catch (error: any) {
-    const status = error.status || 500;
-    res.status(status).json({ error: error.message });
+  } catch (error: unknown) {
+    return handleError(error, res);
   }
 };
