@@ -7,12 +7,9 @@ export default class AcreditacionGetByIdPgRepository implements Pick<IAcreditaci
     id: number
   ): Promise<Acreditacion | null> {
     const acreditacion = await prisma.acreditaciones.findUnique({
-            where: { id }
-        });
-        if (!acreditacion) {
-            throw new Error('not_found, Listing not found');
-        }
-        return acreditacion as unknown as Acreditacion;
+        where: { id, state: "ACTIVE" }
+    });
+    return acreditacion as Acreditacion | null;
 
     
   }
