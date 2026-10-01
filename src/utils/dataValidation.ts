@@ -76,3 +76,7 @@ export function isAcreditacionFilterInvalid(
 
     return false;
 }
+
+export function isValidId(id: number | null): boolean{
+    return id !== null && Number.isInteger(id) && id > 0;
+}
