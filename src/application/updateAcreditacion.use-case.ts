@@ -1,4 +1,4 @@
-import Acreditacion from '../domain/models/Acreditacion';
+import { Acreditacion } from '../domain/models/Acreditacion';
 import IAcreditacionRepository from '../domain/repository/IAcreditacion.repository';
 
 export class UpdateAcreditacionUseCase{
