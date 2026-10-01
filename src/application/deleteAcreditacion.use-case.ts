@@ -1,5 +1,6 @@
 import Acreditacion from "../domain/models/Acreditacion";
 import IAcreditacionRepository from "../domain/repository/IAcreditacion.repository";
+import { isValidId } from "../utils/dataValidation";
 
 export default class DeleteAcreditacionUseCase {
   private acreditacionRepository: IAcreditacionRepository;
@@ -9,19 +10,15 @@ export default class DeleteAcreditacionUseCase {
   }
 
   async deleteAcreditacion(id: number | null) {
-    if (!id || id <= 0 || typeof id !== "number") {
-      throw Object.assign(new Error("Parámetros inválidos"), {
-        status: 400,
-      });
+    if (!isValidId(id)) {
+      throw new Error("bad_request, Parámetros inválidos");
     }
 
     const acreditacionDelete =
       await this.acreditacionRepository.deleteAcreditacion(id);
 
     if (!acreditacionDelete) {
-      throw Object.assign(new Error(`Acreditación ${id} no encontrada`), {
-        status: 404,
-      });
+      throw new Error(`not_found, Acreditación ${id} no encontrada`);
     }
 
     return {

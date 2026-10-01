@@ -2,6 +2,7 @@ import { type Request, type Response } from "express";
 import DeleteAcreditacionUseCase from "../../application/deleteAcreditacion.use-case";
 import type IAcreditacionRepository from "../../domain/repository/IAcreditacion.repository";
 import AcreditacionDeletePgRepository from "../../infrastructure/repository/acreditacion-delete.pg.repository";
+import handleError from "../../utils/handleError";
 
 const repository: Pick<IAcreditacionRepository, "deleteAcreditacion"> =
   new AcreditacionDeletePgRepository();
@@ -16,8 +17,7 @@ export const deleteAcreditacion = async (req: Request, res: Response) => {
     const result = await useCase.deleteAcreditacion(isNaN(id) ? null : id);
 
     res.status(200).json(result);
-  } catch (error: any) {
-    const status = error.status || 500;
-    res.status(status).json({ error: error.message });
+  } catch (error: unknown) {
+    return handleError(error, res);
   }
 };
