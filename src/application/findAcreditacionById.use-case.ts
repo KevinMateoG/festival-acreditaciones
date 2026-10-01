@@ -1,0 +1,21 @@
+import { isValidId } from '../utils/dataValidation';
+import IAcreditacionRepository from '../domain/repository/IAcreditacion.repository';
+
+export class AcreditacionByIdUseCase{
+    private acreditacionRepository: IAcreditacionRepository;
+
+    constructor(acreditacionRepository: IAcreditacionRepository){
+        this.acreditacionRepository = acreditacionRepository;
+    }
+
+    async getAcreditacionById(id: number | null) {
+        if (!isValidId(id)) {
+            throw new Error('bad_request_id,El id de la acreditación es inválido');
+        }
+        const acreditacion = await this.acreditacionRepository.findAcreditacionById(id as number);
+        if (!acreditacion) {
+            throw new Error('not_found, Acreditación no encontrada');
+        }
+        return { data: acreditacion };
+    }
+}

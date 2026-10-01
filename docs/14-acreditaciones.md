@@ -14,7 +14,7 @@ Lee primero [CONVENCIONES.md](CONVENCIONES.md): la forma de las respuestas, la p
 ### `acreditaciones`
 
 | Columna | Tipo | Obligatoria |
-|---|---|---|
+| --- | --- | --- |
 | `id` | int | sí *(automática)* |
 | `nombre` | varchar(100) | sí |
 | `medio` | varchar(100) | sí |
@@ -31,7 +31,7 @@ Lee primero [CONVENCIONES.md](CONVENCIONES.md): la forma de las respuestas, la p
 ## Endpoints
 
 | Método | Ruta | Éxito |
-|---|---|---|
+| --- | --- | --- |
 | GET | `/api/acreditaciones` | 200 paginado |
 | GET | `/api/acreditaciones/:id` | 200 |
 | POST | `/api/acreditaciones` | 201 |
