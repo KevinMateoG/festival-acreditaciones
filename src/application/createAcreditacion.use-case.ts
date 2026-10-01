@@ -1,7 +1,9 @@
-import type { AcreditacionFilterOptions } from "../domain/models/Acreditacion";
-import type Acreditacion from "../domain/models/Acreditacion";
+import type {
+    CreateAcreditacionData,
+    CreateAcreditacionInput,
+} from "../domain/models/Acreditacion";
 import type IAcreditacionRepository from "../domain/repository/IAcreditacion.repository";
-import { isAreditacionDataInvalid } from "../utils/dataValidation";
+import { isAcreditacionDataInvalid } from "../utils/dataValidation";
 
 export class createAcreditacionUseCase {
     private acreditacionRepository: IAcreditacionRepository;
@@ -10,17 +12,21 @@ export class createAcreditacionUseCase {
         this.acreditacionRepository = acreditacionRepository;
     }
 
-    async createAcreditacion(acreditacion: Acreditacion) {
-        if (isAreditacionDataInvalid(acreditacion)) {
-            const error = new Error('bad_request, Datos de acreditación inválidos');
-            throw error;
+    async createAcreditacion(acreditacion: CreateAcreditacionInput) {
+        if (isAcreditacionDataInvalid(acreditacion)) {
+            throw new Error("bad_request, Datos de acreditación inválidos");
         }
 
-        const solicitud: Acreditacion = {
-            ...acreditacion,
+        const solicitud: CreateAcreditacionData = {
+            nombre: acreditacion.nombre,
+            medio: acreditacion.medio,
+            email: acreditacion.email,
+            tipo: acreditacion.tipo,
+            dia_id: acreditacion.dia_id,
+            escenario_id: acreditacion.escenario_id ?? null,
             estado: "PENDIENTE",
             state: "ACTIVE",
-            motivo_rechazo: undefined,
+            motivo_rechazo: null,
         };
         const data =
             await this.acreditacionRepository.createAcreditacion(solicitud);

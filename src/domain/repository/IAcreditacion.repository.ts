@@ -1,10 +1,17 @@
-import Acreditacion from "../models/Acreditacion";
-import type { AcreditacionFilterOptions } from "../models/Acreditacion";
+import type {
+    Acreditacion,
+    AcreditacionFilterOptions,
+    CreateAcreditacionData,
+} from "../models/Acreditacion";
 
 export default interface IAcreditacionRepository {
-    findAllAcreditaciones(filters?: AcreditacionFilterOptions): Promise<{ data: Acreditacion[]; total: number }>;
+    findAllAcreditaciones(
+        filters?: AcreditacionFilterOptions,
+    ): Promise<{ data: Acreditacion[]; total: number }>;
     findAcreditacionById(id: number): Promise<Acreditacion | null>;
-    createAcreditacion(acreditacion: Acreditacion): Promise<Acreditacion>;
+    createAcreditacion(
+        acreditacion: CreateAcreditacionData,
+    ): Promise<Acreditacion>;
     updateAcreditacion(
         id: number,
         acreditacion: Partial<Acreditacion>,
@@ -12,6 +19,6 @@ export default interface IAcreditacionRepository {
     deleteAcreditacion(id: number): Promise<boolean>;
     updateAcreditacionStatus(
         id: number,
-        status: string,
+        status: Acreditacion["estado"],
     ): Promise<Acreditacion | null>;
 }
