@@ -77,6 +77,31 @@ export function isAcreditacionFilterInvalid(
     return false;
 }
 
-export function isValidId(id: number | null): boolean{
-    return id !== null && Number.isInteger(id) && id > 0;
+export function isValidId(id: unknown): id is number {
+    return typeof id === "number" && Number.isInteger(id) && id > 0;
+}
+
+export function isAcreditacionStatusRequestInvalid(body: unknown): boolean {
+    if (!body || typeof body !== "object" || !("estado" in body)) {
+        return true;
+    }
+
+    const request = body as { estado: unknown; motivo?: unknown };
+    if (
+        request.estado !== "APROBADA" &&
+        request.estado !== "RECHAZADA"
+    ) {
+        return true;
+    }
+
+    if (request.motivo !== undefined && typeof request.motivo !== "string") {
+        return true;
+    }
+
+    if (typeof request.motivo === "string" && request.motivo.length > 300) {
+        return true;
+    }
+
+    return request.estado === "RECHAZADA" &&
+        (typeof request.motivo !== "string" || request.motivo.trim().length === 0);
 }

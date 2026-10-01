@@ -1,6 +1,12 @@
 import prisma from "./client";
 import type IAcreditacionRepository from "../../domain/repository/IAcreditacion.repository";
-import Acreditacion from "../../domain/models/Acreditacion";
+import type {
+  Acreditacion,
+  EstadoDecisionAcreditacion,
+  EstadoAcreditacion,
+  TipoAcreditacion,
+  AcreditacionState,
+} from "../../domain/models/Acreditacion";
 
 export default class AcreditacionUpdateStatusPgRepository implements Pick<
   IAcreditacionRepository,
@@ -8,7 +14,7 @@ export default class AcreditacionUpdateStatusPgRepository implements Pick<
 > {
   async updateAcreditacionStatus(
     id: number,
-    status: string,
+    status: EstadoDecisionAcreditacion,
     motivo?: string,
   ): Promise<Acreditacion | null> {
     const acreditacionActualizada = await prisma.acreditaciones.update({
@@ -33,8 +39,11 @@ export default class AcreditacionUpdateStatusPgRepository implements Pick<
 
     return {
       ...acreditacionActualizada,
-      escenario_id: acreditacionActualizada.escenario_id ?? undefined,
-      motivo_rechazo: acreditacionActualizada.motivo_rechazo ?? undefined,
+      tipo: acreditacionActualizada.tipo as TipoAcreditacion,
+      estado: acreditacionActualizada.estado as EstadoAcreditacion,
+      state: acreditacionActualizada.state as AcreditacionState,
+      escenario_id: acreditacionActualizada.escenario_id,
+      motivo_rechazo: acreditacionActualizada.motivo_rechazo,
     };
   }
 }

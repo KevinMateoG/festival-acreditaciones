@@ -1,8 +1,12 @@
-import Acreditacion, {
+import type {
+  Acreditacion,
   UpdateAcreditacionStatusRequest,
 } from "../domain/models/Acreditacion";
-
-import IAcreditacionRepository from "../domain/repository/IAcreditacion.repository";
+import type IAcreditacionRepository from "../domain/repository/IAcreditacion.repository";
+import {
+  isAcreditacionStatusRequestInvalid,
+  isValidId,
+} from "../utils/dataValidation";
 
 export default class UpdateAcreditacionStatusUseCase {
   private acreditacionRepository: IAcreditacionRepository;
@@ -15,23 +19,8 @@ export default class UpdateAcreditacionStatusUseCase {
     id: number | null,
     body: UpdateAcreditacionStatusRequest,
   ): Promise<Acreditacion> {
-    if (
-      !id ||
-      id <= 0 ||
-      typeof id !== "number" ||
-      !body ||
-      typeof body.estado !== "string" ||
-      (body.estado !== "APROBADA" && body.estado !== "RECHAZADA") ||
-      (body.motivo !== undefined && typeof body.motivo !== "string")
-    ) {
-      throw Object.assign(new Error("Parámetros inválidos"), { status: 400 });
-    }
-
-    if (
-      body.estado === "RECHAZADA" &&
-      (!body.motivo || body.motivo.trim() === "")
-    ) {
-      throw Object.assign(new Error("El motivo es obligatorio"), {
+    if (!isValidId(id) || isAcreditacionStatusRequestInvalid(body)) {
+      throw Object.assign(new Error("bad_request, Parámetros inválidos"), {
         status: 400,
       });
     }
@@ -41,16 +30,14 @@ export default class UpdateAcreditacionStatusUseCase {
 
     if (!acreditacion || acreditacion.state === "REMOVED") {
       throw Object.assign(
-        new Error(`not found: Acreditación ${id} no encontrada`),
-        {
-          status: 404,
-        },
+        new Error(`not_found, Acreditación ${id} no encontrada`),
+        { status: 404 },
       );
     }
 
     if (acreditacion.estado !== "PENDIENTE") {
       throw Object.assign(
-        new Error("Solo se puede decidir una acreditacion PENDIENTE"),
+        new Error("Solo se puede decidir una acreditación PENDIENTE"),
         {
           status: 409,
         },

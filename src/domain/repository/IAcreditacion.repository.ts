@@ -1,4 +1,9 @@
-import type { Acreditacion, AcreditacionFilterOptions, CreateAcreditacionData } from "../models/Acreditacion";
+import type {
+    Acreditacion,
+    AcreditacionFilterOptions,
+    CreateAcreditacionData,
+    EstadoDecisionAcreditacion,
+} from "../models/Acreditacion";
 
 export default interface IAcreditacionRepository {
     findAllAcreditaciones(filters?: AcreditacionFilterOptions): Promise<{ data: Acreditacion[]; total: number }>;
@@ -8,7 +13,7 @@ export default interface IAcreditacionRepository {
     deleteAcreditacion(id: number): Promise<boolean>;
     updateAcreditacionStatus(
         id: number,
-        status: string,
+        status: EstadoDecisionAcreditacion,
         motivo?: string,
     ): Promise<Acreditacion | null>;
 }

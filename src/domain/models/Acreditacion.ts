@@ -3,6 +3,7 @@ export type TipoAcreditacion = (typeof tiposAcreditacion)[number];
 
 export const estadosAcreditacion = ["PENDIENTE", "APROBADA", "RECHAZADA"] as const;
 export type EstadoAcreditacion = (typeof estadosAcreditacion)[number];
+export type EstadoDecisionAcreditacion = "APROBADA" | "RECHAZADA";
 export type AcreditacionState = "ACTIVE" | "REMOVED";
 
 export interface Acreditacion {
@@ -17,6 +18,8 @@ export interface Acreditacion {
     motivo_rechazo: string | null;
     state: AcreditacionState;
 }
+
+export default Acreditacion;
 
 export interface CreateAcreditacionInput {
     nombre: string;
@@ -39,6 +42,6 @@ export interface AcreditacionFilterOptions {
 }
 
 export interface UpdateAcreditacionStatusRequest {
-    estado: string;
+    estado: EstadoDecisionAcreditacion;
     motivo?: string;
 }
