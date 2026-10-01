@@ -2,9 +2,9 @@ import { Acreditacion } from '../domain/models/Acreditacion';
 import IAcreditacionRepository from '../domain/repository/IAcreditacion.repository';
 
 export class UpdateAcreditacionUseCase{
-    private acreditacionRepository: IAcreditacionRepository;
+    private acreditacionRepository: Pick<IAcreditacionRepository, 'updateAcreditacion'>;
 
-    constructor(acreditacionRepository: IAcreditacionRepository){
+    constructor(acreditacionRepository: Pick<IAcreditacionRepository, 'updateAcreditacion'>){
         this.acreditacionRepository = acreditacionRepository;
     }
 
