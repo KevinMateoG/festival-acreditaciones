@@ -1,6 +1,6 @@
 import prisma from "./client";
 import type IAcreditacionRepository from "../../domain/repository/IAcreditacion.repository";
-import type { Acreditacion, EstadoDecisionAcreditacion, EstadoAcreditacion, TipoAcreditacion, AcreditacionState } from "../../domain/models/Acreditacion";
+import type { Acreditacion } from "../../domain/models/Acreditacion";
 
 export default class AcreditacionUpdatePgRepository implements Pick<IAcreditacionRepository,"updateAcreditacion"> {
   async updateAcreditacion(id: number, acreditacion: Acreditacion): Promise<Acreditacion | null> {
