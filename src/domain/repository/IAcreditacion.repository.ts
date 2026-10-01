@@ -6,5 +6,9 @@ export default interface IAcreditacionRepository {
     createAcreditacion(acreditacion: CreateAcreditacionData): Promise<Acreditacion>;
     updateAcreditacion(id: number, acreditacion: Partial<Acreditacion>): Promise<Acreditacion | null>;
     deleteAcreditacion(id: number): Promise<boolean>;
-    updateAcreditacionStatus(id: number, status: Acreditacion["estado"]): Promise<Acreditacion | null>;
+    updateAcreditacionStatus(
+        id: number,
+        status: string,
+        motivo?: string,
+    ): Promise<Acreditacion | null>;
 }

@@ -37,3 +37,8 @@ export interface AcreditacionFilterOptions {
     offset?: number;
     page?: number;
 }
+
+export interface UpdateAcreditacionStatusRequest {
+    estado: string;
+    motivo?: string;
+}
