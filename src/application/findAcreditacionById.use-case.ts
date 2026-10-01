@@ -1,4 +1,4 @@
-import Acreditacion from '../domain/models/Acreditacion';
+import { isValidId } from '../utils/dataValidation';
 import IAcreditacionRepository from '../domain/repository/IAcreditacion.repository';
 
 export class AcreditacionByIdUseCase{
@@ -9,7 +9,7 @@ export class AcreditacionByIdUseCase{
     }
 
     async getAcreditacionById(id: number | null) {
-        if (!id || id < 0){
+        if (!isValidId(id)) {
             throw new Error('bad_request_id,El id de la acreditación es inválido');
         }
         const acreditacion = await this.acreditacionRepository.findAcreditacionById(id);
